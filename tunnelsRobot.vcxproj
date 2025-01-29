@@ -127,9 +127,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="kalmanFilter.h" />
     <ClInclude Include="navigate.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="kalmanFilter.cpp" />
     <ClCompile Include="navigate.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

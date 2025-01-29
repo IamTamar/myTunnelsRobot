@@ -18,9 +18,15 @@
     <ClInclude Include="navigate.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="kalmanFilter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="navigate.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="kalmanFilter.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

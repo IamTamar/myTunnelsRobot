@@ -3,8 +3,19 @@ class navigate
 {
 	enum Colors
 	{
-		 gray, //start but didnt finish
-		 black //finish all 
+		 GRAY, //start but didnt finish
+		 BLACK //finish all 
+	};
+	//causes for stops
+	enum Stops
+	{
+      RIGHT,
+	  LEFT,
+	  KIDNAPPED,
+	  TERRORIST,
+	  EXPLOSIVES,
+	  //מכשול
+	  OBSTACLE
 	};
 	//a position point contains 3 coordinates values
 	struct Point
@@ -17,8 +28,7 @@ class navigate
 	struct Vertice
 	{
 		Point p;
-		Colors c;
-
+		Colors c;//finish all directions or not 
 	};
 };
 
