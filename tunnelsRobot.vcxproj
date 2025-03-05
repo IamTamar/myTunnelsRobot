@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -128,11 +128,17 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="kalmanFilter.h" />
-    <ClInclude Include="navigate.h" />
+    <ClInclude Include="Main.h" />
+    <ClInclude Include="Point.h" />
+    <ClInclude Include="Vertex.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Colors.cpp" />
     <ClCompile Include="kalmanFilter.cpp" />
-    <ClCompile Include="navigate.cpp" />
+    <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Point.cpp" />
+    <ClCompile Include="Stops.cpp" />
+    <ClCompile Include="Vertex.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
