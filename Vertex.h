@@ -18,6 +18,11 @@ public:
 		this->s = Stops::DEFAULT;
 		//האם לאתחל את הרשימה?
 	}
+	Vertex() {
+		this->p = Point(0,0,0);
+		this->c = Colors::BLACK;
+		this->s = Stops::DEFAULT;
+	}
 	Point getPoint() {
 		return p;
 	}
@@ -49,8 +54,9 @@ public:
 		next.push_back(v);
 	}	
 	bool isSimilliar(Vertex v);
+	double vertexDirection(Vertex p_v, Vertex o_v);
 	double distance(Vertex v);
+	void lidarDirections(vector<Vertex*> v, Vertex prevOnPath);
 	//Stops direction();
-	double vertexDirection(Vertex r_v, Vertex p_v, Vertex o_v);
 };
 

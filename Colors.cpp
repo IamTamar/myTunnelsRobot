@@ -1,3 +1,5 @@
+#ifndef COLORS_H
+#define COLORS_H
 #include <iostream>
 enum class Colors
 {
@@ -5,3 +7,4 @@ enum class Colors
 	GRAY, //start but didnt finish
 	BLACK //finish all
 };
+#endif

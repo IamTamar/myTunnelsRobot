@@ -41,4 +41,5 @@ public:
 		this->z += z;
 		return this->z;
 	}
+	double pointDirection(Point p_v, Point o_v);
 };

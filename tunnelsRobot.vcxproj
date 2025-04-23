@@ -104,6 +104,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>C:\Users\PC\Downloads\eigen-3.4.0</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -127,15 +128,20 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="GasSensors.h" />
     <ClInclude Include="kalmanFilter.h" />
+    <ClInclude Include="Lidar.h" />
     <ClInclude Include="Main.h" />
     <ClInclude Include="Point.h" />
     <ClInclude Include="Vertex.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Colors.cpp" />
+    <ClCompile Include="GasSensors.cpp" />
     <ClCompile Include="kalmanFilter.cpp" />
+    <ClCompile Include="Lidar.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="nisui.cpp" />
     <ClCompile Include="Point.cpp" />
     <ClCompile Include="Stops.cpp" />
     <ClCompile Include="Vertex.cpp" />
