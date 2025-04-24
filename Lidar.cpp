@@ -5,25 +5,27 @@
 #include <math.h>
 
 using namespace std;
-// לקרוא מקובץ נתוני לידאר
-//בכל איטרציה, נשלח פס לידאר לכל גובה הקיר (מלמעלה למטה) כדי לבדוק:
-//האם העומק של הנקודות העליונות דומה לעומק של הנקודות התחתונות
-//אם כן- אין פתח כנראה ולא מופעלת מצלמה
-//אם לא- יש פתח ומצלמה מופעלת, וכנראה שצריך לפנות לשם
 
-vector<Vertex> rightLidar() {
-	//switch on right lidar and writing to file
+vector<Point> UpTDownLidar() {
+	//lidar performance:
+	// up to down on right, and keeps going to buttom and down to up in left
+	// writing into file
     //reading and moving into vector<vertex>
 }
-vector<Vertex> leftLidar() {
-	//switch on left lidar and writing to file
+vector<Point> RightToLeftLidar() {
+	//lidar performance:
+	//  right near robot, and keeps going in front and left until near robot
+	// writing into file
 	//reading and moving into vector<vertex>
+}
+vector <Point> ceilingLidar() {
+	//looks up to detect obstacles
 }
 
 //function that filters only walls points and then sorts up to down(y axe),
 // and returns differences between up-down on right & left
 //יש צורך לדעת מה המרחק מהקירות ב2 הצדדים לשם כך!!! חשוב לוודא שיש לי
-vector<double> wallsFilter(vector<Point> v, double rightDist, double leftDist) {
+vector<Point*> wallsFilterUTD(vector<Point> v, double rightDist, double leftDist) {
 	vector<Point> right = {}, left = {};
 	for (Point p : v)
 	{
@@ -41,7 +43,31 @@ vector<double> wallsFilter(vector<Point> v, double rightDist, double leftDist) {
 		return a.getY() > b.getY();
 	});
 	 
-	double avgRightUp, avgLeftUp, sumRightUp=0, sumLeftUp=0, avgRightDown, avgLeftDown, sumRightDown = 0, sumLeftDown = 0;
+	vector<Point*> vects = {right, left};
+	//vector<double> avgs = { abs(avgRightUp - avgRightDown), abs(avgLeftUp - avgLeftDown) };
+	return vects;
+	//כשנזמן את הפונקציה הזו נבדוק בכל צד האם ההפרשים מידי גדולים, אם כן - הפעלת מצלמה
+}
+
+vector<double> wallsFilterRTL(vector<Point> v, double rightDist, double leftDist) {
+	vector<Point> right = {}, left = {};
+	for (Point p : v)
+	{
+		if (p.getX() > 0 && p.getX() >= rightDist - 2)
+			right.push_back(p);
+		if (p.getX() < 0 && p.getX() >= (leftDist - 2) * (-1))
+			left.push_back(p);
+	}
+
+	sort(right.begin(), right.end(), [](Point a, Point b) {
+		return a.getY() > b.getY();
+		});
+
+	sort(left.begin(), left.end(), [](Point a, Point b) {
+		return a.getY() > b.getY();
+		});
+
+	double avgRightUp, avgLeftUp, sumRightUp = 0, sumLeftUp = 0, avgRightDown, avgLeftDown, sumRightDown = 0, sumLeftDown = 0;
 	for (int i = 0; i < 10; i++)
 	{
 		sumRightUp += right[i].getX();
@@ -58,12 +84,56 @@ vector<double> wallsFilter(vector<Point> v, double rightDist, double leftDist) {
 	avgLeftDown = sumLeftDown / 10;
 	vector<double> avgs = { abs(avgRightUp - avgRightDown), abs(avgLeftUp - avgLeftDown) };
 	return avgs;
-	//כשנזמן את הפונקציה הזו נבדוק בכל צד האם ההפרשים מידי גדולים, אם כן - הפעלת מצלמה
-	//  לא להשתמש בפונקציית הצדדים!!!!!
 }
 
+vector<double> avgs(vector<Point*> vects) {
+	double avgRightUp, avgLeftUp, sumRightUp = 0, sumLeftUp = 0, avgRightDown, avgLeftDown, sumRightDown = 0, sumLeftDown = 0;
+	vector <Point> right = vects[0], left = vects[1];
+	for (int i = 0; i < 10; i++)
+	{
+		sumRightUp += right[i].getX();
+		sumLeftUp += left[i].getX();
+	}
+	for (int i = 0; i < 10; i++)
+	{
+		sumRightDown += right[right.size() - 1 - i].getX();
+		sumLeftDown += left[left.size() - 1 - i].getX();
+	}
+	avgRightUp = sumRightUp / 10;
+	avgLeftUp = sumLeftUp / 10;
+	avgRightDown = sumLeftUp / 10;
+	avgLeftDown = sumLeftDown / 10;
 
+	vector<double> avgs = { abs(avgRightUp - avgRightDown), abs(avgLeftUp - avgLeftDown) };
 
+	return avgs;
+} 
+
+bool wallInFront(vector<Point> v) {
+	vector<Point> front = {};
+	for (Point p : v)
+	{
+		if (p.getX() >= -20 && p.getX() <=20 )
+			front.push_back(p);
+	}
+
+	sort(front.begin(), front.end(), [](Point a, Point b) {
+		return a.getZ() > b.getZ();
+	});
+
+	//אולי חציון או אפילו סטיית תקן???
+	//בינתיים ממוצע פשוט אבל לבדוק!
+	double sum = 0, avg, median;
+	for (Point p : front) {
+		sum += p.getZ();
+	}
+	avg = sum / front.size();
+	median = front[front.size() / 2];
+	//אולי ממוצע של החציון והממוצע?
+	if (avg <= 40)
+		return true;
+	return false;
+}
 
 //using the ransac algorithm to filter outliers(i don't know if these are match for me)
 // ביצוע פילוח מישור פשוט של קבוצת נקודות 

@@ -1,4 +1,3 @@
-#pragma once
 #include <list>
 #include <stack>
 #include "Vertex.h"	

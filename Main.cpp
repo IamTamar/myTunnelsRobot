@@ -1,5 +1,6 @@
 #include "Main.h"
 #include "Vertex.cpp"
+#include "Lidar.cpp"
 #include <stack>
 #include <vector>
 
@@ -28,6 +29,18 @@ void move() {
 		nextVertex.setColor(Colors::GRAY);
 		Main::verticeList.push_back(&nextVertex);//add to main list
 
+		//lidar data up to down..
+		double rightDist, leftDist;
+		//converting data from file to vector<point>
+		vector<Point> lidarPointC;
+		vector <double> avgs = wallsFilterUTD(lidarPointC, rightDist, leftDist);
+
+		//lidar data robot right to left..
+
+
+
+
+
 		//define a vertix direction
 		
 		nextVertex.setStop(s);
@@ -45,6 +58,8 @@ void move() {
 			Main::turnsStack.pop();
 			Main::counter--;
 		}
+
+
 
 
 
